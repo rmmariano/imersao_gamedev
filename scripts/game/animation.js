@@ -37,5 +37,4 @@ class Animation {
       this.currentFrame = 0;
     }
   }
-
 }
