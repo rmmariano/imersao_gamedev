@@ -1,12 +1,14 @@
 
 class Animation {
-  constructor(_matrix, _image, _x, _width, _height, _spriteWidth, _spriteHeight) {
+  constructor(_matrix, _image, _x, _yVariation,_width, _height, _spriteWidth, _spriteHeight) {
     this.matrix = _matrix;
     this.image = _image;
     this.width = _width;
     this.height = _height;
     this.x = _x;
-    this.y = height - this.height;
+    // `_yVariation` is used to prevent the character from sticking to the bottom corner of the screen
+    this._yVariation = _yVariation;
+    this.y = height - this.height - this._yVariation;
     this.spriteWidth = _spriteWidth;
     this.spriteHeight = _spriteHeight;
     this.currentFrame = 0;

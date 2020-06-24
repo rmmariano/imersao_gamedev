@@ -1,17 +1,25 @@
 
 class Character extends Animation {
-  constructor(_matrix, _image, _x, _width, _height, _spriteWidth, _spriteHeight) {
-    super(_matrix, _image, _x, _width, _height, _spriteWidth, _spriteHeight);
+  constructor(_matrix, _image, _x, _yVariation, _width, _height, _spriteWidth, _spriteHeight) {
+    super(_matrix, _image, _x, _yVariation, _width, _height, _spriteWidth, _spriteHeight);
 
-    this.initialY = height - this.height;
+    this._yVariation = _yVariation;
+
+    this.initialY = height - this.height - this._yVariation;
     this.y = this.initialY;
 
     this.jumpSpeed = 0;
-    this.gravity = 3;
+    this.gravity = 5;
+
+    this.jumpHeight = -50;
+    this.jumps = 0;
   }
 
   jump() {
-    this.jumpSpeed = -30;
+    if (this.jumps < 2) {
+      this.jumpSpeed = this.jumpHeight;
+      this.jumps++;
+    }
   }
 
   applyGravity(){
@@ -19,7 +27,10 @@ class Character extends Animation {
     this.jumpSpeed = this.jumpSpeed + this.gravity;
 
     if (this.y > this.initialY) {
+      // put the character on the ground
       this.y = this.initialY;
+      // reset the jumps
+      this.jumps = 0;
     }
   }
 
@@ -36,3 +47,6 @@ class Character extends Animation {
     return collision;
   }
 }
+
+
+// https://youtu.be/IuVlkxZd4GE?t=2721

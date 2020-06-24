@@ -1,9 +1,12 @@
 // images
 let scenarioImage;
+let gameOverImage;
 let characterImage;
 let enemyImage;
+let flyingEnemyImage;
+let bigEnemyImage;
 
-// image matrixes
+// images matrixes
 const characterMatrix = [
   [0, 0],
   [220, 0],
@@ -52,6 +55,54 @@ const enemyMatrix = [
   [210, 609],
   [315, 609],
 ];
+const flyingEnemyMatrix = [
+  [0,0],
+  [200, 0],
+  [400, 0],
+  [0, 150],
+  [200, 150],
+  [400, 150],
+  [0, 300],
+  [200, 300],
+  [400, 300],
+  [0, 450],
+  [200, 450],
+  [400, 450],
+  [0, 600],
+  [200, 600],
+  [400, 600],
+  [0, 750],
+];
+const bigEnemyMatrix = [
+  [0,0],
+  [400,0],
+  [800,0],
+  [1200,0],
+  [1600,0],
+  [0,400],
+  [400,400],
+  [800,400],
+  [1200, 400],
+  [1600, 400],
+  [0,800],
+  [400, 800],
+  [800, 800],
+  [1200, 800],
+  [1600, 800],
+  [0, 1200],
+  [400, 1200],
+  [800, 1200],
+  [1200, 1200],
+  [1600, 1200],
+  [0, 1600],
+  [400, 1600],
+  [800, 1600],
+  [1200, 1600],
+  [1600, 1600],
+  [0, 2000],
+  [400, 2000],
+  [800, 2000],
+];
 
 // sounds
 let gameSoundtrack;
@@ -60,13 +111,25 @@ let jumpSound;
 // objects
 let scenario;
 let character;
-let enemy;
+let points;
+
+// array of enemies
+const enemies = [];
 
 
 function preload() {
+  // it runs before the game starts
+
+  // images
   scenarioImage = loadImage('images/scenario/forest.png');
+  gameOverImage = loadImage('images/assets/game-over.png');
+
   characterImage = loadImage('images/character/running.png');
-  enemyImage = loadImage('images/enemies/little_drop.png');
+  enemyImage = loadImage('images/enemies/small_drop.png');
+  flyingEnemyImage = loadImage('images/enemies/flying_small_drop.png');
+  bigEnemyImage = loadImage('images/enemies/troll.png');
+
+  // sounds
   gameSoundtrack = loadSound('songs/game_soundtrack.mp3');
   jumpSound = loadSound('songs/jump_sound.mp3');
 }
@@ -80,18 +143,41 @@ function setup() {
 
   // create the objects
   scenario = new Scenario(scenarioImage, 3);
+  points = new Point();
   character = new Character(
     characterMatrix, characterImage,
-    0,
+    0, 30,
     110, 135,
     220, 270
   );
-  enemy = new Enemy(
+
+  // create the enemies
+  const enemy = new Enemy(
     enemyMatrix, enemyImage,
-    width - 52,
+    width - 52, 30,
     52, 52,
-    104, 104
+    104, 104,
+    10, 200
   );
+  const flyingEnemy = new Enemy(
+    flyingEnemyMatrix, flyingEnemyImage,
+    width - 52, 200,
+    100, 75,
+    200, 150,
+    10, 1500
+  );
+  const bigEnemy = new Enemy(
+    bigEnemyMatrix, bigEnemyImage,
+    width * 2, 0,
+    200, 200,
+    400, 400,
+    10, 2500
+  );
+
+  // add the enemies to the array
+  enemies.push(enemy);
+  enemies.push(flyingEnemy);
+  enemies.push(bigEnemy);
 
   // frames per second
   frameRate(40);
@@ -99,6 +185,7 @@ function setup() {
   // turn on the sound
   gameSoundtrack.loop();
 }
+
 
 function keyPressed() {
   // it is a observable
@@ -109,22 +196,26 @@ function keyPressed() {
   }
 }
 
+
 function draw() {
   // it runs N times
-
-  // circle(mouseX, mouseY, 250);
 
   scenario.show();
   scenario.move();
 
+  points.show();
+  points.addPoint();
+
   character.show();
   character.applyGravity();
 
-  enemy.show();
-  enemy.move();
+  enemies.forEach(enemy => {
+    enemy.show();
+    enemy.move();
 
-  if (character.isColliding(enemy)) {
-    console.log('Collision');
-    noLoop(); // draw() function stops running
-  }
+    if (character.isColliding(enemy)) {
+      image(gameOverImage, width/2 - 200, height/3);
+      noLoop(); // draw() function stops running
+    }
+  });
 }
