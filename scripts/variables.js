@@ -121,8 +121,8 @@ let jumpSound;
 
 // scenes
 let scenes;
-// let currentScene = 'initialScreen';
-let currentScene = 'game';
+let currentScene = 'initialScreen';
+// let currentScene = 'game';
 let initialScreen;
 let game;
 
