@@ -2,6 +2,9 @@
 function preload() {
   // it runs before the game starts
 
+  // cartridge
+  cartridge = loadJSON('cartridge/cartridge.json');
+
   // fonts
   fontInitialScreen = loadFont('images/assets/font_initial_screen.otf');
 
@@ -14,6 +17,8 @@ function preload() {
   enemyImage = loadImage('images/enemies/small_drop.png');
   flyingEnemyImage = loadImage('images/enemies/flying_small_drop.png');
   bigEnemyImage = loadImage('images/enemies/troll.png');
+
+  lifeImage = loadImage('images/assets/heart.png');
 
   // sounds
   gameSoundtrack = loadSound('songs/game_soundtrack.mp3');

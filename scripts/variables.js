@@ -1,4 +1,7 @@
 
+// map
+let cartridge;
+
 // fonts
 let fontInitialScreen;
 
@@ -6,6 +9,8 @@ let fontInitialScreen;
 let initialScreenImage;
 let scenarioImage;
 let gameOverImage;
+
+let lifeImage;
 
 let characterImage;
 let enemyImage;
@@ -116,7 +121,8 @@ let jumpSound;
 
 // scenes
 let scenes;
-let currentScene = 'initialScreen';
+// let currentScene = 'initialScreen';
+let currentScene = 'game';
 let initialScreen;
 let game;
 
@@ -124,8 +130,10 @@ let managerButton;
 
 // objects
 let scenario;
-let character;
 let points;
+let life;
+
+let character;
 
 // array of enemies
 const enemies = [];

@@ -40,8 +40,4 @@ function draw() {
   // it runs N times
 
   scenes[currentScene].draw();
-
-  // if (currentScene === 'game') {
-  //   game.draw();
-  // }
 }

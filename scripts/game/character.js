@@ -13,6 +13,8 @@ class Character extends Animation {
 
     this.jumpHeight = -50;
     this.jumps = 0;
+
+    this.isInvincible = false;
   }
 
   jump() {
@@ -34,7 +36,21 @@ class Character extends Animation {
     }
   }
 
+  becomeInvincible() {
+    // the character becomes invincible during a time, because the method
+    // isColliding() is called N times to one enemy
+
+    this.isInvincible = true;
+
+    setTimeout(() => {
+      this.isInvincible = false;
+    }, 1000);
+  }
+
   isColliding(enemy) {
+    if (this.isInvincible)
+      return false;
+
     const precision = 0.7;
 
     const collision =  collideRectRect(
